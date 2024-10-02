@@ -1,0 +1,12 @@
+{
+  "tabWidth": 4,
+  "singleQuote": false,
+  "trailingComma": "es5",
+  "semi": true,
+  "astroSortOrder": "markup | styles | scripts",
+  "plugins": [
+    "prettier-plugin-astro",
+    "prettier-plugin-astro-organize-imports",
+    "prettier-plugin-organize-imports"
+  ]
+}
