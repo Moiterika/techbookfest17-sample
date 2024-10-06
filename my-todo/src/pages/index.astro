@@ -9,16 +9,20 @@
         <meta name="viewport" content="width=device-width" />
         <meta name="generator" content={Astro.generator} />
         <title>Astro</title>
-        <!-- CDNを使う方法1 minified version -->
-        <script
+        <!-- 方法1. CDNを使う minified version -->
+        <!-- <script
             src="https://unpkg.com/htmx.org@2.0.3"
             integrity="sha384-0895/pl2MU10Hqc6jd4RvrthNlDiE9U1tWmX7WRESftEDRosgxNsQG/Ze9YMRzHq"
-            crossorigin="anonymous"></script>
-        <!-- CDNを使う方法2 unminified version -->
+            crossorigin="anonymous"></script> -->
+        <!-- 方法2. CDNを使う unminified version -->
         <!-- <script
             src="https://unpkg.com/htmx.org@2.0.3/dist/htmx.js"
             integrity="sha384-BBDmZzVt6vjz5YbQqZPtFZW82o8QotoM7RUp5xOxV3nSJ8u2pSdtzFAbGKzTlKtg"
             crossorigin="anonymous"></script> -->
+        <!-- 方法3. ダウンロード版を使う minified version -->
+        <script src="/htmx.min.js" is:inline></script>
+        <!-- 方法4. ウンロード版を使う unminified version -->
+        <!-- <script src="/htmx.js" is:inline></script> -->
     </head>
     <body>
         <h1>Astro</h1>
