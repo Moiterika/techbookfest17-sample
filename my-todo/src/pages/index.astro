@@ -27,15 +27,23 @@
     </head>
     <body>
         <h1>Astro</h1>
-        <form hx-post="api/sample" hx-target="#result" hx-swap="beforeend">
-            <input
-                type="text"
-                name="my-name"
-                placeholder="名前を記入してください。"
-                required
-            />
-            <button type="submit">追加</button>
-        </form>
-        <div id="result"></div>
+        <div hx-ext="response-targets">
+            <form
+                hx-post="api/sample"
+                hx-target="#result"
+                hx-swap="beforeend"
+                hx-target-error="#error-message"
+            >
+                <input
+                    type="text"
+                    name="my-name"
+                    placeholder="名前を記入してください。"
+                    required
+                />
+                <button type="submit">追加</button>
+            </form>
+            <div id="result"></div>
+            <div id="error-message" style="color: red;"></div>
+        </div>
     </body>
 </html>
