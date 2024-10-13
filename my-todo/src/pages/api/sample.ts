@@ -12,5 +12,12 @@ export const POST: APIRoute = async ({ request }) => {
     if (myName == "fuga") {
         return new Response(`<div>fugaはダメです。</div>`, { status: 400 });
     }
+    if (myName == "fugafuga") {
+        const res = new Response(`<div>fugaはダメです。</div>`, {
+            status: 400,
+        });
+        res.headers.set("HX-Reswap", "innerHTML");
+        return res;
+    }
     return new Response(`<div>${myName}</div>`, { status: 200 });
 };
