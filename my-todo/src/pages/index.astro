@@ -25,14 +25,14 @@
         <!-- <script src="/htmx.js" is:inline></script> -->
         <script src="/response-targets.min.js" is:inline></script>
     </head>
-    <body>
+    <body x-data="errorHandler">
         <h1>Astro</h1>
         <div hx-ext="response-targets">
             <form
                 hx-post="api/sample"
                 hx-target="#result"
                 hx-swap="beforeend"
-                hx-target-error="#error-message"
+                hx-target-4*="#error-message"
             >
                 <input
                     type="text"
@@ -43,7 +43,56 @@
                 <button type="submit">追加</button>
             </form>
             <div id="result"></div>
-            <div id="error-message" style="color: red;"></div>
+            <div id="error-message" x-show="isError" style="color: red;"></div>
+            <div x-show="hasErrorMessage">
+                <!-- x-show="errorMessage"でも可 -->
+                <p x-text="errorMessage"></p>
+            </div>
         </div>
+        <script>
+            import Alpine from "alpinejs";
+            const errorHandler = () => ({
+                errorMessage: "",
+                isError: false,
+                get hasErrorMessage(): boolean {
+                    return this.errorMessage != "";
+                },
+                init() {
+                    document.body.addEventListener(
+                        "htmx:responseError",
+                        (event) => {
+                            const customEvent = event as CustomEvent;
+                            if (
+                                500 <= customEvent.detail.xhr.status &&
+                                customEvent.detail.xhr.status < 600
+                            ) {
+                                // console.log(customEvent);
+                                this.errorMessage = `サーバーエラーが発生しました。${customEvent.detail.xhr.responseText}`;
+                            }
+                        }
+                    );
+                    document.body.addEventListener(
+                        "htmx:afterRequest",
+                        (event) => {
+                            const customEvent = event as CustomEvent;
+
+                            // HTMXとresponse-targetsで捉えられない場合、customEvent.detail.successfulはfalseになる
+                            // 200番台⇒true; HTMXで補足
+                            // 400番台⇒true; hx-target-4*で補足
+                            // 500番台⇒false
+                            if (customEvent.detail.successful) {
+                                this.errorMessage = "";
+                            }
+                            this.isError = customEvent.detail.xhr.status >= 400;
+                        }
+                    );
+                },
+            });
+
+            // Alpine.jsの初期化時にバインディング処理を実行する
+            document.addEventListener("alpine:init", () => {
+                Alpine.data("errorHandler", errorHandler);
+            });
+        </script>
     </body>
 </html>

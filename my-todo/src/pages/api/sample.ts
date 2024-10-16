@@ -19,5 +19,22 @@ export const POST: APIRoute = async ({ request }) => {
         res.headers.set("HX-Reswap", "innerHTML");
         return res;
     }
+    if (myName == "piyo") {
+        // 擬似的なタイムアウト
+        return new Response(null, { status: 504 });
+    }
+    try {
+        if (myName == "piyopiyo") {
+            // 擬似的なDBエラー
+            throw new Error("DBエラーpiyopiyoが発生しました。");
+        }
+    } catch (e: unknown) {
+        if (e instanceof Error) {
+            return new Response(e.message, { status: 500 });
+        } else {
+            console.log(e);
+            return new Response("サーバーエラー内容をここに", { status: 500 });
+        }
+    }
     return new Response(`<div>${myName}</div>`, { status: 200 });
 };
