@@ -1,0 +1,24 @@
+---
+export const partial = true;
+// Define props for TypeScript support in Astro components
+interface Props {
+    message: string;
+    id?: string;
+    isHxSwapOob?: boolean;
+}
+// Define props for AstroContainer rendering in TypeScript
+export type MessageProps = {
+    message: string;
+    id?: string;
+    isHxSwapOob?: boolean;
+};
+
+const { message, id, isHxSwapOob } = Astro.props;
+---
+
+<div
+    {...id ? { id: id } : {}}
+    {...isHxSwapOob ? { "hx-swap-oob": "true" } : {}}
+>
+    {message}
+</div>
