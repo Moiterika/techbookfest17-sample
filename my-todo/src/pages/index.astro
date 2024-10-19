@@ -1,5 +1,31 @@
 ---
+// importは---で囲われたコードフェンス内で行います
+import { css } from "../../styled-system/css";
 import "../index.css";
+
+const buttonStyle = css({
+    padding: "8px 16px",
+    fontSize: "16px",
+    fontWeight: "bold",
+    color: "white",
+    backgroundColor: "indigo.500",
+    border: "none",
+    borderRadius: "4px",
+    cursor: "pointer",
+    transition: "background-color 0.3s ease",
+
+    "&:hover": {
+        backgroundColor: "indigo.700",
+    },
+    "&:active": {
+        backgroundColor: "indigo.500",
+    },
+    "&:disabled": {
+        backgroundColor: "indigo.100",
+        cursor: "not-allowed",
+        pointerEvents: "none",
+    },
+});
 ---
 
 <html lang="jp">
@@ -39,8 +65,17 @@ import "../index.css";
                     name="my-name"
                     placeholder="名前を記入してください。"
                     required
+                    class={css({
+                        border: "1px solid #818cf8",
+                        padding: "8px",
+                        borderRadius: "4px",
+                        _focus: {
+                            borderColor: "#4338ca",
+                            outline: "none",
+                        },
+                    })}
                 />
-                <button type="submit">追加</button>
+                <button type="submit" class={buttonStyle}>追加</button>
             </form>
             <div id="result"></div>
             <div id="error-message" x-show="isError" style="color: red;"></div>
