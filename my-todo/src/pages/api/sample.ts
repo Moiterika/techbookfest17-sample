@@ -1,5 +1,5 @@
 import type { APIRoute } from "astro";
-import { htmlRender } from "../../api-scripts/htmlRender";
+import { htmlRender } from "../../apiScripts/htmlRender";
 import Message, { type MessageProps } from "../../components/Message.astro";
 
 export const POST: APIRoute = async ({ request }) => {
