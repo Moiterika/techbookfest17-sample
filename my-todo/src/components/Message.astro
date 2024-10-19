@@ -1,17 +1,14 @@
 ---
+import type { Props as AstroProps } from "astro";
 export const partial = true;
 // Define props for TypeScript support in Astro components
-interface Props {
+interface Props extends AstroProps {
     message: string;
     id?: string;
     isHxSwapOob?: boolean;
 }
 // Define props for AstroContainer rendering in TypeScript
-export type MessageProps = {
-    message: string;
-    id?: string;
-    isHxSwapOob?: boolean;
-};
+export type MessageProps = Props;
 
 const { message, id, isHxSwapOob } = Astro.props;
 ---
