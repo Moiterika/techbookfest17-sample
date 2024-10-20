@@ -6,6 +6,9 @@ const prisma = new PrismaClient({
 });
 
 export const GET: APIRoute = async ({ request }) => {
+    // 動作確認が終わったので、このAPIは封鎖
+    return new Response(null, { status: 404 });
+
     // Create
     const todo = await prisma.todo.create({
         data: { title: "abc" }, // not nullな項目は明示する必要あり
