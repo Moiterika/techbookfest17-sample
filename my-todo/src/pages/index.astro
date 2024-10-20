@@ -5,6 +5,9 @@ import { buttonStyle, inputStyle } from "../styles/form.css";
 ---
 
 <Layout pageTitle="Astro">
+    <div>
+        <a href="/apl">TODOアプリへ</a>
+    </div>
     <div hx-ext="response-targets" x-data="errorHandler">
         <form
             hx-post="api/sample"
