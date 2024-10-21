@@ -1,0 +1,24 @@
+---
+import type { Todo } from "@prisma/client";
+import type { Props as AstroProps } from "astro";
+import { buttonStyle } from "../styles/form.css";
+import { tableCell, tableRow } from "../styles/tableDiv.css";
+
+export const partial = true;
+// Define props for TypeScript support in Astro components
+export interface Props extends AstroProps {
+    todo: Todo;
+}
+const { todo: todo } = Astro.props;
+---
+
+<tr id={`todo-${todo.id}`} hx-target="#todo-edit" class={tableRow}>
+    <td class={tableCell}>{todo.id}</td>
+    <td class={tableCell}>{todo.title}</td>
+    <td class={tableCell}>{todo.done ? "完了" : ""}</td>
+    <td class={tableCell}>
+        <button hx-get={`/api/todos/${todo.id}?edit=true`} class={buttonStyle}
+            >編集</button
+        >
+    </td>
+</tr>

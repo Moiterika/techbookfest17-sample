@@ -1,0 +1,91 @@
+---
+import type { Todo } from "@prisma/client";
+import type { Props as AstroProps } from "astro";
+import { buttonErrorStyle, buttonStyle, inputStyle } from "../styles/form.css";
+import { modalBackdrop, modalContent } from "../styles/modal.css";
+
+export const partial = true;
+// Define props for TypeScript support in Astro components
+export interface Props extends AstroProps {
+    todo: Todo;
+}
+const { todo: todo } = Astro.props;
+
+const apiUrl = `/api/todos/${todo.id}`;
+---
+
+<div
+    id={`todo-edit-${todo.id}`}
+    hx-target="this"
+    hx-swap="delete"
+    hx-trigger="submit"
+    x-data="{ isVisible: true }"
+    x-show="isVisible"
+    class={modalBackdrop}
+>
+    <div class={modalContent}>
+        <form
+            hx-put={apiUrl}
+            hx-target={`#todo-${todo.id}`}
+            hx-swap="outerHTML"
+            hx-trigger="submit"
+        >
+            <div>
+                <label
+                    >ID
+                    <input
+                        type="text"
+                        name="id"
+                        value={todo.id.toString()}
+                        disabled
+                    /></label
+                >
+            </div>
+            <div>
+                <label
+                    >Title
+                    <input
+                        type="text"
+                        name="title"
+                        value={todo.title}
+                        required
+                        class={inputStyle}
+                    /></label
+                >
+            </div>
+            <div>
+                <label
+                    >Done
+                    <input
+                        type="checkbox"
+                        name="done"
+                        checked={todo.done}
+                    /></label
+                >
+            </div>
+            <div>
+                <button
+                    type="submit"
+                    class={buttonStyle}
+                    @click="isVisible = false">保存</button
+                >
+                <button
+                    type="button"
+                    class={buttonStyle}
+                    @click="isVisible = false">キャンセル</button
+                >
+                <button
+                    type="button"
+                    class={buttonErrorStyle}
+                    hx-delete={apiUrl}
+                    hx-swap="delete"
+                    hx-confirm="このタスクを削除しますか？"
+                    hx-target-error="#response"
+                    @click="isVisible = false"
+                >
+                    削除
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

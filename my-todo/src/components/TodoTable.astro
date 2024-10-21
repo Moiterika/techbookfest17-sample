@@ -1,0 +1,40 @@
+---
+export const partial = true;
+import { buttonStyle, inputStyle } from "../styles/form.css";
+import {
+    table,
+    tableBody,
+    tableHeader,
+    tableHeaderCell,
+} from "../styles/tableDiv.css";
+
+const apiUrl = "/api/todos/";
+const headers = ["Id", "Title", "Done", ""];
+---
+
+<form
+    hx-post={apiUrl}
+    hx-target="#todo-rows"
+    hx-swap="beforeend"
+    hx-on-htmx-after-request="this.reset()"
+    hx-target-error="#response"
+>
+    <input
+        type="text"
+        id="newTitle"
+        name="title"
+        placeholder="新しいタスク"
+        required
+        class={inputStyle}
+    />
+    <button type="submit" class={buttonStyle}>追加</button>
+    <div id="response"></div>
+</form>
+
+<table hx-get={apiUrl} hx-target="#todo-rows" hx-trigger="load" class={table}>
+    <thead class={tableHeader}>
+        {headers.map((h) => <th class={tableHeaderCell}>{h}</th>)}
+    </thead>
+    <tbody id="todo-rows" class={tableBody}></tbody>
+</table>
+<div id="todo-edit"></div>

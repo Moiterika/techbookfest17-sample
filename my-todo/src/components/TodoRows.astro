@@ -1,0 +1,14 @@
+---
+import type { Todo as TodoType } from "@prisma/client";
+import type { Props as AstroProps } from "astro";
+import Todo from "./Todo.astro";
+
+export const partial = true;
+// Define props for TypeScript support in Astro components
+export interface Props extends AstroProps {
+    todos: TodoType[];
+}
+const { todos } = Astro.props;
+---
+
+{todos.map((e) => <Todo todo={e} />)}

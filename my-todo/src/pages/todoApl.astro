@@ -1,0 +1,14 @@
+---
+import TodoTable from "../components/TodoTable.astro";
+import Layout from "../layouts/Layout.astro";
+import { containerStyle } from "../styles/page.css";
+---
+
+<Layout pageTitle="TODOアプリ">
+    <div>
+        <a href="/">トップページへ</a>
+    </div>
+    <div class={containerStyle}>
+        <TodoTable />
+    </div>
+</Layout>

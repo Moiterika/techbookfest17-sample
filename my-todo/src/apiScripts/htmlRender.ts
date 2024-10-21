@@ -15,7 +15,7 @@ type HxSwapType =
 
 export const htmlRender = async <T extends Props>(
     astro: AstroComponentFactory,
-    astroProp: T,
+    astroProp: T | undefined,
     status: number,
     hxReswap?: HxSwapType
 ) => {

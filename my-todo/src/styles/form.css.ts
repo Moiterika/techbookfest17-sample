@@ -33,3 +33,26 @@ export const buttonStyle = css({
         pointerEvents: "none",
     },
 });
+export const buttonErrorStyle = css({
+    padding: "8px 16px",
+    fontSize: "16px",
+    fontWeight: "bold",
+    color: "white",
+    backgroundColor: "rose.500",
+    border: "none",
+    borderRadius: "4px",
+    cursor: "pointer",
+    transition: "background-color 0.3s ease",
+
+    "&:hover": {
+        backgroundColor: "rose.700",
+    },
+    "&:active": {
+        backgroundColor: "rose.500",
+    },
+    "&:disabled": {
+        backgroundColor: "rose.100",
+        cursor: "not-allowed",
+        pointerEvents: "none",
+    },
+});
