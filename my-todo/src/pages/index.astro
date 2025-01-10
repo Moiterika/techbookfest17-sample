@@ -31,35 +31,28 @@ import { buttonStyle, inputStyle } from "../styles/form.css";
             <p x-text="errorMessage"></p>
         </div>
     </div>
-    <script>
-        import Alpine from "alpinejs";
+    <script is:inline>
+        // ※もともとの errorHandler 関数を変数として定義
         const errorHandler = () => ({
             errorMessage: "",
             isError: false,
-            get hasErrorMessage(): boolean {
-                return this.errorMessage != "";
+            get hasErrorMessage() {
+                return this.errorMessage !== "";
             },
             init() {
                 document.body.addEventListener(
                     "htmx:responseError",
                     (event) => {
-                        const customEvent = event as CustomEvent;
-                        if (
-                            500 <= customEvent.detail.xhr.status &&
-                            customEvent.detail.xhr.status < 600
-                        ) {
-                            // console.log(customEvent);
+                        const customEvent = event;
+                        // ステータスコード500以上
+                        if (customEvent.detail.xhr.status >= 500) {
                             this.errorMessage = `サーバーエラーが発生しました。${customEvent.detail.xhr.responseText}`;
                         }
                     }
                 );
                 document.body.addEventListener("htmx:afterRequest", (event) => {
-                    const customEvent = event as CustomEvent;
-
-                    // HTMXとresponse-targetsで捉えられない場合、customEvent.detail.successfulはfalseになる
-                    // 200番台⇒true; HTMXで補足
-                    // 400番台⇒true; hx-target-4*で補足
-                    // 500番台⇒false
+                    const customEvent = event;
+                    // 400番台などでエラーがあった場合
                     if (customEvent.detail.successful) {
                         this.errorMessage = "";
                     }
@@ -68,7 +61,7 @@ import { buttonStyle, inputStyle } from "../styles/form.css";
             },
         });
 
-        // Alpine.jsの初期化時にバインディング処理を実行する
+        // Alpine が初期化される（"alpine:init"）タイミングで data を登録
         document.addEventListener("alpine:init", () => {
             Alpine.data("errorHandler", errorHandler);
         });
